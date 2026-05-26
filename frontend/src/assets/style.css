@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Conservamos tus variables originales aquí abajo por si las necesitas después para algo específico */
+:root {
+  --color-tetradic-1: #5b8d32;
+  --color-tetradic-2: #72a549;
+  --color-tetradic-3: #30898e;
+  --color-tetradic-4: #4ba0a5;
+  --color-tetradic-5: #6e3b97;
+  --color-tetradic-6: #97403b;
+  --color-tetradic-7: #FFFFFF;
+}

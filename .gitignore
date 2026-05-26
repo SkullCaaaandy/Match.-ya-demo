@@ -1,0 +1,7 @@
+#Cache de la Mac de Neyzer, etc.
+.DS_Store
+
+# Variables de entorno
+.env
+.env.*
+!.env.example

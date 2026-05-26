@@ -1,0 +1,112 @@
+const { supabase } = require("../src/config/db");
+
+class MatchingVacantesService {
+
+  normalizar(texto) {
+    return texto
+      ? texto.toString()
+          .trim()
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+      : "";
+  }
+
+  async procesar(id_candidato) {
+    try {
+
+      // 1. Obtener filtros
+      const { data: filtros, error: errorFiltros } = await supabase
+        .from("filtros_busqueda")
+        .select("*")
+        .eq("id_candidato", id_candidato)
+        .single();
+
+      if (errorFiltros || !filtros) {
+        return {
+          principal: [],
+          secundaria: []
+        };
+      }
+
+      const preferencias = filtros;
+
+      // 2. Obtener vacantes
+      const { data: vacantes, error: errorVacantes } = await supabase
+        .from("vacantes")
+        .select("*")
+        .eq("estatus", "Activa");
+
+      if (errorVacantes) throw errorVacantes;
+
+      let principal = [];
+      let secundaria = [];
+
+      for (const vacante of vacantes) {
+
+        const score = this.calcularScore(vacante, preferencias);
+
+        vacante.score = score;
+        vacante.match = score + "%";
+
+        if (score >= 50) {
+          principal.push(vacante);
+        } else {
+          secundaria.push(vacante);
+        }
+      }
+
+      principal.sort((a,b)=>b.score-a.score);
+      secundaria.sort((a,b)=>b.score-a.score);
+
+      return {
+        principal,
+        secundaria
+      };
+
+    } catch (error) {
+      console.log("Error Matching:", error);
+      throw error;
+    }
+  }
+
+  calcularScore(vacante, preferencias) {
+
+  let score = 0;
+
+  // Puesto
+  if (
+    this.normalizar(preferencias.puesto) &&
+    this.normalizar(vacante.titulo).includes(
+      this.normalizar(preferencias.puesto)
+    )
+  ) score += 40;
+
+  // Ubicación flexible
+  if (
+    this.normalizar(preferencias.ubicacion) &&
+    this.normalizar(vacante.ubicacion).includes(
+      this.normalizar(preferencias.ubicacion)
+    )
+  ) score += 20;
+
+  // Modalidad
+  if (
+    this.normalizar(preferencias.modalidad) &&
+    this.normalizar(vacante.modalidad) ===
+    this.normalizar(preferencias.modalidad)
+  ) score += 20;
+
+  // Sueldo
+  if (
+    preferencias.salario_minimo &&
+    Number(vacante.sueldo) >= Number(preferencias.salario_minimo)
+  ) score += 20;
+
+  if (score > 100) score = 100;
+
+  return score;
+}
+}
+
+module.exports = new MatchingVacantesService();
