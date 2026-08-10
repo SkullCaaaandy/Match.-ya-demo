@@ -1,3 +1,36 @@
+MATCH-YA
+
+Web platform for job recruitment that connects candidates and recruiters through a matching-based job discovery system.
+
+Features
+
++ Candidate and recruiter profiles
++ Job vacancy management
++ Personalized job matching
++ Swipe-based interactions
++ Candidate filtering
++ Applications and interviews
+
+
+DEMO
+
++ Video DEMO:
+  https://youtu.be/4Gr6XD48Lwk
+
+<img width="690" height="788" alt="WhatsApp Image 2026-08-10 at 16 26 51" src="https://github.com/user-attachments/assets/aa87e63a-8d18-4ce8-92bd-f092c21e272f" />
+
+<img width="557" height="747" alt="WhatsApp Image 2026-08-10 at 16 26 03 (1)" src="https://github.com/user-attachments/assets/b5d80043-4e16-4644-948b-83c9abb44202" />
+<img width="584" height="858" alt="WhatsApp Image 2026-08-10 at 16 26 03" src="https://github.com/user-attachments/assets/7441f168-420d-4bb6-b16b-5e4fdd1d129a" />
+<img width="763" height="880" alt="WhatsApp Image 2026-08-10 at 16 26 04" src="https://github.com/user-attachments/assets/70088b3a-0246-42db-bb13-d883b5b55a0c" />
+
+
+
+
+
+
+----------------------------------------
+
+
 Instrucciones para Empezar:
 
 ---
